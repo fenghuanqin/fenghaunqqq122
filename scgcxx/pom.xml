@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.tnr</groupId>
+  <artifactId>scxx</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  
+  
+  	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.7.RELEASE</version>
+	</parent>
+
+	<!-- Add typical dependencies for a web application -->
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>	
+	
+	<!-- druid -->
+		<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>druid-spring-boot-starter</artifactId>
+	    <version>1.1.18</version>
+	</dependency>
+	
+	<!-- mysql-connector-java -->
+	<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>5.1.47</version><!--$NO-MVN-MAN-VER$-->
+	</dependency>
+	
+	<!-- pagehelper-spring-boot-starter -->
+	<dependency>
+	    <groupId>com.github.pagehelper</groupId>
+	    <artifactId>pagehelper-spring-boot-starter</artifactId>
+	    <version>1.2.12</version>
+	</dependency>
+	
+		<!-- mybatis-spring-boot-starter -->
+		<dependency>
+		    <groupId>org.mybatis.spring.boot</groupId>
+		    <artifactId>mybatis-spring-boot-starter</artifactId>
+		    <version>2.1.0</version>
+		</dependency>
+		<!-- 开发者工具 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+	</dependencies>
+	
+	
+
+	<!-- Package as an executable jar -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-compiler-plugin</artifactId>
+		   		<configuration>
+		   			<scoure>1.8</scoure>
+		   			<target>1.8</target>
+		   		</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
