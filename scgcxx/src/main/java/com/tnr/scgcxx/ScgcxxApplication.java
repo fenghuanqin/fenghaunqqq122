@@ -7,10 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
 @SpringBootApplication
-@MapperScan("com.tnr.scgcxx.dao")
+@MapperScan({"com.tnr.scgcxx.dao","com.tnr.scgcxx.shiro.dao"})
 public class ScgcxxApplication {
 
+	
 	public static void main(String[] args) {
 		SpringApplication.run(ScgcxxApplication.class, args);
 	}

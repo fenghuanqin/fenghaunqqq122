@@ -1,5 +1,7 @@
 package com.tnr.scgcxx.model;
 
+import com.tnr.scgc.base.StatusEnum;
+
 public class User {
 	
 	private String u_id;
@@ -32,6 +34,8 @@ public class User {
 	public void setU_status(String u_status) {
 		this.u_status = u_status;
 	}
-	
+	public String getStatusName() {
+		return StatusEnum.getName(u_status);
+	}
 	
 }

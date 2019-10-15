@@ -6,10 +6,10 @@
   <select id="findAllMenu" resultType="Module">
     
 
-  	select 
+ <!--  	select 
 	  	p.m_id p_id,
 	  	p.m_name p_name,
-	  	m.m_pid,
+	  	m.m_id
 	  	m.m_name,
 	  	m.m_url
 	from 
@@ -23,8 +23,30 @@
 		p.m_status ='55' and
 		m.m_ismenu ='1' 
 	order 
-		by p.m_id,m.m_id;
+		by p.m_id,m.m_id; -->
 	
-	</select>
+		SELECT
+		p.m_id p_id,
+	  	p.m_name p_name,
+	  	m.m_pid,
+	  	m.m_name,
+	  	m.m_url
+	from 
+		sys_module  p
+					INNER JOIN sys_module m  on p.m_id  = m.m_pid
+					INNER JOIN sys_rm     rm on m.m_id   = rm.m_id
+					INNER JOIN sys_role   r  on r.ro_id  = rm.ro_id
+					INNER JOIN sys_ur     ur on ur.ro_id = r.ro_id
+					INNER JOIN sys_user   u  on u.u_id   = ur.u_id			
+	<where> 
+		m.m_pid is not null AND
+		m.m_ismenu=1 AND
+		m.m_status='55' AND
+		r.ro_status='55' AND
+		u.u_status='55' AND
+		u.u_id=#{userId}
+	</where>
+	
+</select>
   
 </mapper>

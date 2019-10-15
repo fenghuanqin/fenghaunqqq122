@@ -1,9 +1,9 @@
 package com.tnr.scgcxx.dto;
 
-public class PageParm {
+public class PageParam {
 	
-	private Integer pageSize;//每页记录数
-	private Integer pageNum;//当前页码号数
+	private Integer pageSize=3;//每页记录数
+	private Integer pageNum=1;//当前页码号数
 	
 	public Integer getPageSize() {
 		return pageSize;

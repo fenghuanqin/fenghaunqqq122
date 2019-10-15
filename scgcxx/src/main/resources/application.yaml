@@ -2,7 +2,7 @@ server:
   port: 80
   
 logging:
-  lever:
+  level:
     root: info
     web: debug
     org.springframework.web.servlet.mvc: trace
@@ -17,7 +17,8 @@ spring:
     date-format: yyyy-MM-dd
   jackson:
     date-format: yyyy-MM-dd
-    
+#时区设置
+    time-zone: Asia/Shanghai 
 mybatis:
   mapper-locations: mapper/**/*.xml
   type-aliases-package: com.tnr.scgcxx.model
@@ -25,4 +26,8 @@ mybatis:
 pagehelper:
   helper-dialect: mysql
   reasonable: true
+shiro:
+  loginUrl: /loginTo
+  successUrl: /successTo
+  unauthorizedUrl: /unauthorizedTo
     

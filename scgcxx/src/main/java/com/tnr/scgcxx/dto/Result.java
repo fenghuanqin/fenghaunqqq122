@@ -14,7 +14,6 @@ public class Result {
 		return new Result(true,message,data);
 	}
 	
-	
 	public static Result failResult() {
 		return new Result(false,null,null);
 	}
@@ -26,16 +25,32 @@ public class Result {
 	public static Result failResult(String message,Object data) {
 		return new Result(false,message,data);
 	}
+	
+	
+	public static Result unLoggedResult(String url) {
+		return new Result(url);
+	}
+	
+	private boolean logined;
+	private String url;
+	
 	private boolean success;
 	private String message;
 	private Object data;
 	
 	
-	public Result(boolean successResult, String message, Object data) {
+	private Result(boolean success, String message, Object data) {
 		super();
-		this.success = successResult;
+		this.logined=true;
+		this.success = success;
 		this.message = message;
 		this.data = data;
+	}
+	
+	private Result(String url) {
+		super();
+		this.logined=false;
+		this.url=url;
 	}
 
 	public boolean isSuccess() {
@@ -49,7 +64,14 @@ public class Result {
 	public Object getData() {
 		return data;
 	}
-	
+
+	public boolean isLogined() {
+		return logined;
+	}
+
+	public String getUrl() {
+		return url;
+	}
 	
 	
 	

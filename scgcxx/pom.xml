@@ -52,6 +52,13 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<!-- shiro配置starter  -->
+		<dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-spring-boot-web-starter</artifactId>
+		    <version>1.4.1</version>
+		</dependency>
+
 		
 	</dependencies>
 	
