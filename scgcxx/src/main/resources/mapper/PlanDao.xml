@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tnr.scgcxx.dao.plan.PlanDao">
+	<select id="findPageList" resultType="Plan">
+
+		select
+			plan_id,
+			standard_name,
+			cus_name,
+			co_name,
+			plan_xh,
+			plan_month,
+			plan_num,
+			plan_type,
+			plan_date,
+			plan_person,
+			plan_status
+		from
+			bus_plan p
+						INNER JOIN info_standard s on p.standard_id=s.standard_id
+						INNER JOIN info_customer c on p.cus_id=c.cus_id
+						INNER JOIN info_color co on p.co_id=co.co_id 		
+		<where>
+			<if test="plan_id !=null">
+				plan_id like concat('%',#{plan_id},'%')
+			</if>
+
+			<if test="standard_id !=null">
+				and p.standard_id like concat('%',#{standard_id},'%')
+			</if>
+
+			<if test="cus_id !=null">
+				and p.cus_id like concat('%',#{cus_id},'%')
+			</if>
+
+			<if test="co_id !=null">
+				and p.co_id like concat('%',#{co_id},'%')
+			</if>
+
+			<if test="plan_xh !=null">
+				and plan_xh like concat('%',#{plan_xh},'%')
+			</if>
+
+			<if test="plan_month !=null and plan_month !=''">
+				and plan_month like concat('%',#{plan_month},'%')
+			</if>
+
+			<if test="plan_num !=null">
+				and plan_num like concat('%',#{plan_num},'%')
+			</if>
+			
+			<if test="plan_type !=null">
+				and plan_type like concat('%',#{plan_type},'%')
+			</if>
+			 <if test="plan_date_start != null">
+				
+				and plan_date &gt;= #{plan_date_start}
+			</if> 
+			
+			<if test="plan_date_end != null">
+				
+				and plan_date &lt;= #{plan_date_end}
+			</if> 
+			
+			<if test="plan_person !=null and plan_person  !=''">
+				and plan_person like concat('%',#{plan_person},'%')
+			</if>
+			
+			<if test="plan_status !=null">
+				and plan_status like concat('%',#{plan_status},'%')
+			</if>
+			
+
+		</where>
+	</select>
+
+	<!-- <update id="exctDoStatus">
+		update info_color
+		<set>
+			<if test="co_status == '77' ">co_status='55',</if>
+			<if test="co_status == '55' ">co_status='77',</if>
+			<if test="co_status == '22' ">co_status='55',</if>
+			<if test="co_status == '00' ">co_status='22'</if>
+		</set>
+		where co_id=#{co_id}
+	</update>
+	-->
+	
+	<delete id="delesPlan">
+		delete
+		from
+		bus_plan
+		<where>
+			<foreach item="plan_id" collection="plan_ids" open=""
+				separator="or" close="">
+				plan_id = #{plan_id}
+			</foreach>
+		</where>
+
+	</delete> 
+
+
+</mapper>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tnr.scgcxx.dao.info.StandardDao">
+	<select id="findStandardList" resultType="Standard">
+
+		select
+		standard_id,
+		standard_name,
+		standard_remark,
+		standard_status
+		from
+		info_standard
+		<where>
+			<if test="standard_id !=null">
+				standard_id like concat('%',#{standard_id},'%')
+			</if>
+
+			<if test="standard_name !=null and standard_name !=''">
+				and standard_name like concat('%',#{standard_name},'%')
+			</if>
+
+			<if test="standard_remark !=null and standard_remark !=''">
+				and standard_remark like concat('%',#{standard_remark},'%')
+			</if>
+
+			<if test="standard_status !=null and standard_status  !=''">
+				and standard_status like concat('%',#{standard_status},'%')
+			</if>
+
+
+		</where>
+	</select>
+
+	<update id="exctDoStatus">
+		update info_standard
+		<set>
+			<if test="standard_status=='00'">standard_status='22',</if>
+			<if test="standard_status=='22'">standard_status='55',</if>
+			<if test="standard_status=='55'">standard_status='77'</if>
+			<if test="standard_status=='77'">standard_status='99'</if>
+		</set>
+		where standard_id=#{standard_id}
+	</update>
+	<delete id="exctDoDelets">
+		delete
+		from
+		info_standard
+		<where>
+			<foreach item="standard_id" collection="standard_ids" open=""
+				separator="or" close="">
+				standard_id = #{standard_id}
+			</foreach>
+		</where>
+
+	</delete>
+
+
+</mapper>

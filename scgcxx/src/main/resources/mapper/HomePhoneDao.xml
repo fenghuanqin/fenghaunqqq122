@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tnr.scgcxx.dao.safty.HomePhoneDao">
+  <select id="findSomeMenu" resultType="Module">
+    
+
+ <!--  	select 
+	  	p.m_id p_id,
+	  	p.m_name p_name,
+	  	m.m_id
+	  	m.m_name,
+	  	m.m_url
+	from 
+		sys_module p join sys_module m on p.m_id=m.m_pid
+	where 
+		m.m_pid is not null and 
+		m.m_status ='55' and
+		m.m_ismenu ='1' and
+		
+		p.m_pid is null and
+		p.m_status ='55' and
+		m.m_ismenu ='1' 
+	order 
+		by p.m_id,m.m_id; -->
+	
+	SELECT
+	  	m.m_id,
+	  	m.m_name,
+	  	m.m_url
+	from 
+		sys_module  m
+					INNER JOIN sys_rm     rm on m.m_id   = rm.m_id
+					INNER JOIN sys_role   r  on r.ro_id  = rm.ro_id
+					INNER JOIN sys_ur     ur on ur.ro_id = r.ro_id
+					INNER JOIN sys_user   u  on u.u_id   = ur.u_id			
+	<where> 
+		m.m_pid is not null AND
+		m.m_ismenu=1 AND
+		m.m_status='55' AND
+		r.ro_status='55' AND
+		u.u_status='55' AND
+		m.m_name='染色' 
+		or m.m_name='印花' 
+		or m.m_name='整理'
+		or m.m_name='成品入库'
+		or m.m_name='成品出库'  AND 
+		u.u_id=#{userId}
+		
+	</where>
+	
+</select>
+  
+</mapper>

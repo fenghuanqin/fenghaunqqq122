@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tnr.scgcxx.dao.safty.RoleDao">
+	<select id="findRolePage" resultType="Role">
+
+		select
+		ro_id,
+		ro_name,
+		ro_remark,
+		ro_status
+		from
+		sys_role
+		<where>
+			<if test="ro_id !=null">
+				ro_id like concat('%',#{ro_id},'%')
+			</if>
+
+			<if test="ro_name !=null and ro_name !=''">
+				and ro_name like concat('%',#{ro_name},'%')
+			</if>
+
+			<if test="ro_remark !=null and ro_remark !=''">
+				and ro_remark like concat('%',#{ro_remark},'%')
+			</if>
+
+			<if test="ro_status !=null and ro_status  !=''">
+				and ro_status like concat('%',#{ro_status},'%')
+			</if>
+
+
+		</where>
+	</select>
+
+	<update id="roleDoStatus">
+		update sys_role
+		<set>
+			<if test="ro_status == '77' ">ro_status='55',</if>
+			<if test="ro_status == '55' ">ro_status='77',</if>
+			<if test="ro_status == '22' ">ro_status='55',</if>
+			<if test="ro_status == '00' ">ro_status='22'</if>
+		</set>
+		where ro_id=#{ro_id}
+	</update>
+	<delete id="roledoDeles">
+		delete
+		from
+		sys_role
+		<where>
+			<foreach item="ro_id" collection="ro_ids" open=""
+				separator="or" close="">
+				ro_id = #{ro_id}
+			</foreach>
+		</where>
+
+	</delete> 
+	
+	<!-- <select id="findModuleList" resultType="Module">
+	
+		select 
+		sys_module.m_name
+		FROM 
+		sys_role
+		LEFT JOIN 
+		sys_rm
+				on sys_role.ro_id=sys_rm.ro_id
+		LEFT JOIN 
+		sys_module
+				on sys_module.m_id=sys_rm.m_id
+	
+	</select>
+ -->
+</mapper>

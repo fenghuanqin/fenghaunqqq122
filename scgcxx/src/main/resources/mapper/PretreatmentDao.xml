@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tnr.scgcxx.dao.process.PretreatmentDao">
+	<select id="findPretreatmentList" resultType="Process">
+
+		SELECT
+			process_id,
+			pr.plan_id,
+			<!-- CONCAT(c.cus_id,','c.cus_name),
+			CONCAT(co.co_id,',',co.co_name),
+			CONCAT(s.standard_id,',',s.standard_name), -->
+			c.cus_id,c.cus_name,
+			co.co_id,co.co_name,
+			s.standard_id,s.standard_name,
+			p.plan_type,
+			group_num,group_date,group_person,
+			pretreat_num,pretreat_date,pretreat_person,
+			dye_num,dye_date,dye_person,
+			print_num,print_date,print_person,
+			arrange_num,arrange_date,arrange_person,
+			check_num,check_date,check_person,
+			process_status
+		from bus_process pr 
+							INNER JOIN bus_plan p on pr.plan_id=p.plan_id
+							INNER JOIN info_standard s on p.standard_id=s.standard_id
+							INNER JOIN info_customer c on p.cus_id=c.cus_id
+							INNER JOIN info_color co on p.co_id=co.co_id 	
+		<where>
+			<if test="process_id !=null">
+				process_id like concat('%',#{process_id},'%')
+			</if>
+			
+			<if test="plan_id !=null">
+				and pr.plan_id like concat('%',#{plan_id},'%')
+			</if>
+
+			<if test="standard_id !=null">
+				and p.standard_id like concat('%',#{standard_id},'%')
+			</if>
+
+			<if test="cus_id !=null">
+				and p.cus_id like concat('%',#{cus_id},'%')
+			</if>
+
+			<if test="co_id !=null">
+				and p.co_id like concat('%',#{co_id},'%')
+			</if>
+			
+			<if test="plan_type !=null and plan_type !=''" >
+				and p.plan_type like concat('%',#{plan_type},'%')
+			</if>
+			
+			<if test="group_num !=null">
+				and group_num like concat('%',#{group_num},'%')
+			</if>		
+			<if test="group_date !=null and group_date  !=''">
+				and group_date like concat('%',#{group_date},'%')
+			</if>
+			<if test="group_person !=null and group_person  !=''">
+				and group_person like concat('%',#{group_person},'%')
+			</if>
+			
+			<if test="pretreat_num !=null">
+				and pretreat_num like concat('%',#{pretreat_num},'%')
+			</if>
+			<if test="pretreat_date !=null and pretreat_date  !=''">
+				and pretreat_date like concat('%',#{pretreat_date},'%')
+			</if>
+			<if test="pretreat_person !=null and pretreat_person  !=''">
+				and pretreat_person like concat('%',#{pretreat_person},'%')
+			</if>
+			
+			<if test="dye_num !=null">
+				and dye_num like concat('%',#{dye_num},'%')
+			</if>
+			<if test="dye_date !=null and dye_date  !=''">
+				and dye_date like concat('%',#{dye_date},'%')
+			</if>
+			<if test="dye_person !=null and dye_person  !=''">
+				and dye_person like concat('%',#{dye_person},'%')
+			</if>
+			
+			<if test="print_num !=null">
+				and print_num like concat('%',#{print_num},'%')
+			</if>
+			<if test="print_date !=null and print_date  !=''">
+				and print_date like concat('%',#{print_date},'%')
+			</if>
+			<if test="print_person !=null and print_person  !=''">
+				and print_person like concat('%',#{print_person},'%')
+			</if>
+			
+			<if test="arrange_num !=null">
+				and arrange_num like concat('%',#{arrange_num},'%')
+			</if>
+			<if test="arrange_date !=null and arrange_date  !=''">
+				and arrange_date like concat('%',#{arrange_date},'%')
+			</if>
+			<if test="arrange_person !=null and arrange_person  !=''">
+				and arrange_person like concat('%',#{arrange_person},'%')
+			</if>
+			
+			<if test="check_num !=null">
+				and check_num like concat('%',#{check_num},'%')
+			</if>
+			<if test="check_date !=null and check_date  !=''">
+				and check_date like concat('%',#{check_date},'%')
+			</if>
+			<if test="check_person !=null and check_person  !=''">
+				and check_person like concat('%',#{check_person},'%')
+			</if>
+			
+			<if test="process_status !=null">
+				and process_status like concat('%',#{process_status},'%')
+			</if>
+			
+
+		</where>
+	
+	
+	
+	
+	
+	</select>
+	<select id="getOnePlan" resultType="Plan">
+	
+	select
+			plan_id,
+			c.cus_id,c.cus_name,
+			s.standard_id,s.standard_name,
+			co.co_id,co.co_name,
+			plan_xh,
+			plan_month,
+			plan_num,
+			plan_type,
+			plan_date,
+			plan_person,
+			plan_status
+		from
+			bus_plan p
+						INNER JOIN info_standard s on p.standard_id=s.standard_id
+						INNER JOIN info_customer c on p.cus_id=c.cus_id
+						INNER JOIN info_color co on p.co_id=co.co_id 
+	
+			where
+					p.plan_id=#{plan_id}
+	</select>
+	
+	<insert id="addProcess">
+	
+	insert into bus_process (plan_id,process_cus,process_std,process_color,group_num,process_id,group_date,group_person,process_status)
+	SELECT  plan_id,cus_id,standard_id,co_id,#{dto.group_num}, #{dto.process_id},#{currDate},#{currUserName},'00'
+	 from 	bus_plan p
+	 where 
+	 		p.plan_id=#{dto.plan_id}
+	
+	
+	
+	</insert>
+	<select id="getOnePlanUp" resultType="Plan">
+	
+	select
+			plan_id,
+			c.cus_id,c.cus_name,
+			s.standard_id,s.standard_name,
+			co.co_id,co.co_name,
+			plan_xh,
+			plan_month,
+			plan_num,
+			plan_type,
+			plan_date,
+			plan_person,
+			plan_status
+		from
+			bus_plan p
+						INNER JOIN info_standard s on p.standard_id=s.standard_id
+						INNER JOIN info_customer c on p.cus_id=c.cus_id
+						INNER JOIN info_color co on p.co_id=co.co_id 
+	
+			where
+					p.plan_id=#{plan_id}
+	</select>
+	
+	 <update id="updProcess">
+		update 
+				bus_process
+		set 
+				<!-- plan_id =#{plan_id},
+				process_cus=#{process_cus},
+				process_std=#{process_std},
+				process_color=#{process_color},
+				group_num=#{process_num},
+				group_date=#{currDate},
+				group_person=#{currUserName} -->
+				
+				plan_id =#{plan.plan_id},
+				process_cus=#{plan.cus_id},
+				process_std=#{plan.standard_id},
+				process_color=#{plan.co_id},
+				group_num=#{process_num},
+				group_date=#{currDate},
+				group_person=#{currUserName}
+		where process_id=#{process_id}
+	</update>
+	 
+	 
+	<delete id="deletes">
+		delete
+		from
+		bus_process
+		<where>
+			<foreach item="process_id" collection="process_ids" open=""
+				separator="or" close="">
+				process_id = #{process_id}
+			</foreach>
+		</where>
+
+	</delete> 
+ 
+
+</mapper>

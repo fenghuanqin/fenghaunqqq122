@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tnr.scgcxx.dao.safty.UserDao">
+	<select id="findUserPage" resultType="User">
+
+		SELECT 
+			u_id,
+			u_name,
+			u_status
+		from 
+			sys_user
+		<where>
+			<if test="u_id !=null">
+				u_id like concat('%',#{u_id},'%')
+			</if>
+
+			<if test="u_name !=null and u_name !=''">
+				and u_name like concat('%',#{u_name},'%')
+			</if>
+
+			<if test="u_pwd !=null and u_pwd !=''">
+				and u_pwd like concat('%',#{u_pwd},'%')
+			</if>
+
+			<if test="u_status !=null and u_status  !=''">
+				and u_status like concat('%',#{u_status},'%')
+			</if>
+
+
+		</where>
+	</select>
+
+	<update id="exctDoStatus">
+		update sys_user
+		<set>
+			<if test="u_status == '77' ">u_status='55',</if>
+			<if test="u_status == '55' ">u_status='77',</if>
+			<if test="u_status == '22' ">u_status='55',</if>
+			<if test="u_status == '00' ">u_status='22'</if>
+		</set>
+		where u_id=#{u_id}
+	</update>
+	<delete id="exctDoDelets">
+		delete
+		from
+		sys_user
+		<where>
+			<foreach item="u_id" collection="u_ids" open=""
+				separator="or" close="">
+				u_id = #{u_id}
+			</foreach>
+		</where>
+
+	</delete>
+
+
+</mapper>
