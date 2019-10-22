@@ -11,7 +11,7 @@
 		co_remark,
 		co_status
 		from
-		info_Color
+		info_color
 		<where>
 			<if test="co_id !=null">
 				co_id like concat('%',#{co_id},'%')

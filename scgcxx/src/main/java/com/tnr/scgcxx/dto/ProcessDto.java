@@ -58,34 +58,38 @@ public class ProcessDto extends PageParam{
 	private Integer standard_id;
 	private String standard_name;
 	//再补充
-	private Double check_numOne;
-	private Double check_numTwo;
-	private Double check_numThree;
-	private Double check_numOther;
+	private Double product_numOne;
+	private Double product_numTwo;
+	private Double product_numThree;
+	private Double product_numOther;
 	
-	public Double getCheck_numOne() {
-		return check_numOne;
+	
+	public Double getProduct_numOne() {
+		return product_numOne;
 	}
-	public void setCheck_numOne(Double check_numOne) {
-		this.check_numOne = check_numOne;
+	public void setProduct_numOne(Double product_numOne) {
+		this.product_numOne = product_numOne;
 	}
-	public Double getCheck_numTwo() {
-		return check_numTwo;
+	public Double getProduct_numTwo() {
+		return product_numTwo;
 	}
-	public void setCheck_numTwo(Double check_numTwo) {
-		this.check_numTwo = check_numTwo;
+	public void setProduct_numTwo(Double product_numTwo) {
+		this.product_numTwo = product_numTwo;
 	}
-	public Double getCheck_numThree() {
-		return check_numThree;
+	public Double getProduct_numThree() {
+		return product_numThree;
 	}
-	public void setCheck_numThree(Double check_numThree) {
-		this.check_numThree = check_numThree;
+	public void setProduct_numThree(Double product_numThree) {
+		this.product_numThree = product_numThree;
 	}
-	public Double getCheck_numOther() {
-		return check_numOther;
+	public Double getProduct_numOther() {
+		return product_numOther;
 	}
-	public void setCheck_numOther(Double check_numOther) {
-		this.check_numOther = check_numOther;
+	public void setProduct_numOther(Double product_numOther) {
+		this.product_numOther = product_numOther;
+	}
+	public void setCheck_num(Double check_num) {
+		this.check_num = check_num;
 	}
 	public Integer getCo_id() {
 		return co_id;

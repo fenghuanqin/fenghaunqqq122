@@ -37,9 +37,9 @@ public interface CheckDao {
 	//int updProcess(@Param("process_id")Double process_id, @Param("plan_id")Integer plan_id, @Param("process_cus")Integer process_cus, @Param("process_std")Integer process_std, @Param("process_color")Integer process_color,
 			//@Param("process_num")Double process_num, @Param("currDate")String currDate, @Param("currUserName")String currUserName);
 	int updProcess(@Param("process_id")Double process_id, @Param("plan")Plan plan, @Param("process_num")Double process_num, @Param("currDate")String currDate, @Param("currUserName")String currUserName);
-	@Update("update bus_process set check_num=#{dto.check_num},check_date=#{currDate},check_person=#{currUserName},process_status='30'where process_id=#{dto.process_id}")
+	@Update("update bus_process set check_num=#{dto.arrange_num},check_date=#{currDate},check_person=#{currUserName},process_status='30'where process_id=#{dto.process_id}")
 	int updStatusOn(@Param("dto")ProductDto dto,  @Param("currDate")String currDate, @Param("currUserName")String currUserName);
-	@Update("update bus_process set check_num=#{dto.check_num},check_date=#{currDate},check_person=#{currUserName},process_status='35'where process_id=#{dto.process_id}")
+	@Update("update bus_process set check_num=#{dto.arrange_num},check_date=#{currDate},check_person=#{currUserName},process_status='35'where process_id=#{dto.process_id}")
 	int updStatusAfter(@Param("dto")ProductDto dto,  @Param("currDate")String currDate, @Param("currUserName")String currUserName);
 	@Delete("delete from bus_process where process_id = #{process_id}") 
 	int dele(Double process_id);
@@ -56,7 +56,40 @@ public interface CheckDao {
 	//@Select("select * from bus_product where process_id=#{dto.process_id}")
 	List<Product> selectProduct(@Param("dto")ProcessDto dto);
 
-	@Update("update bus_product set product_num=#{dto.product_num},product_status='30'where process_id=#{dto.process_id}")
-	int upStatusOna(ProductDto dto);
+	//@Update("update bus_product set product_num=#{dto.product_num},product_status='30'where process_id=#{dto.process_id}")
+	//int upStatusOnProduct(ProductDto dto);
+
+	 
+	
+	
+	
+	//int upStatusAfterProduct(@Param("product_num") Double product_num, ProductDto dto);
+
+	@Update("update bus_product set product_num=#{product_numOne},product_status='35'where process_id=#{dto.process_id} and product_level=1")
+	int upStatusAfterProductOne(Double product_numOne, ProductDto dto);
+
+	@Update("update bus_product set product_num=#{product_numTwo},product_status='35'where process_id=#{dto.process_id} and product_level=2")
+	int upStatusAfterProductTwo(Double product_numTwo, ProductDto dto);
+
+	@Update("update bus_product set product_num=#{product_numThree},product_status='35'where process_id=#{dto.process_id} and product_level=3")
+	int upStatusAfterProductThree(Double product_numThree, ProductDto dto);
+
+	@Update("update bus_product set product_num=#{product_numOther},product_status='35'where process_id=#{dto.process_id} and product_level=4")
+	int upStatusAfterProductOther(Double product_numOther, ProductDto dto);
+
+	@Update("update bus_product set product_num=#{product_numOne},product_status='30'where process_id=#{dto.process_id} and product_level=1")
+	int upStatusOnProductOne(Double product_numOne, ProductDto dto);
+
+	@Update("update bus_product set product_num=#{product_numTwo},product_status='30'where process_id=#{dto.process_id} and product_level=2")
+	int upStatusOnProductTwo(Double product_numTwo, ProductDto dto);
+
+	@Update("update bus_product set product_num=#{product_numThree},product_status='30'where process_id=#{dto.process_id} and product_level=3")
+	int upStatusOnProductThree(Double product_numThree, ProductDto dto);
+
+	@Update("update bus_product set product_num=#{product_numOther},product_status='30'where process_id=#{dto.process_id} and product_level=4")
+	int upStatusOnProductOther(Double product_numOther, ProductDto dto);
+
+	//@Select("select * from bus_product where process_id=#{dto.process_id}")
+	List<Product> selectProductOne(@Param("dto") ProcessDto dto);
 	
 }

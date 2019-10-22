@@ -36,13 +36,15 @@ public interface CheckService {
 
 	Result exctUpd(ProcessDto dto, String currDate, String currUserName);
 
-	Result exctUpdStatus(ProductDto dto, String currDate, String currUserName);
+	Result exctUpdStatusOn(ProductDto dto, String currDate, String currUserName);
 
 	Result exctDele(Double process_id);
 
 	Result exctDeletes(Double[] process_ids);
 
 	List<Product> excAddCheck(ProcessDto dto);
+
+	Result exctUpdStatusAfter(ProductDto dto, String currDate, String currUserName);
 	
 
 	

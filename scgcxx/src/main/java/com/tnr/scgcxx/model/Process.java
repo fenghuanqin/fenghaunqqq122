@@ -32,42 +32,47 @@ public class Process {
 	private String process_status;
 	private String plan_type;
 	//补充
-	private Double check_numOne;
-	private Double check_numTwo;
-	private Double check_numThree;
-	private Double check_numOther;
+	private Double product_numOne;
+	private Double product_numTwo;
+	private Double product_numThree;
+	private Double product_numOther;
 	private Double product_num;
 
-	public Double getCheck_numOne() {
-		return check_numOne;
-	}
+	
 	public Double getProduct_num() {
+		
 		return product_num;
 	}
 	public void setProduct_num(Double product_num) {
 		this.product_num = product_num;
 	}
-	public void setCheck_numOne(Double check_numOne) {
-		this.check_numOne = check_numOne;
+	
+
+	public Double getProduct_numOne() {
+		return product_numOne;
 	}
-	public Double getCheck_numTwo() {
-		return check_numTwo;
+	public void setProduct_numOne(Double product_numOne) {
+		this.product_numOne = product_numOne;
 	}
-	public void setCheck_numTwo(Double check_numTwo) {
-		this.check_numTwo = check_numTwo;
+	public Double getProduct_numTwo() {
+		return product_numTwo;
 	}
-	public Double getCheck_numThree() {
-		return check_numThree;
+	public void setProduct_numTwo(Double product_numTwo) {
+		this.product_numTwo = product_numTwo;
 	}
-	public void setCheck_numThree(Double check_numThree) {
-		this.check_numThree = check_numThree;
+	public Double getProduct_numThree() {
+		return product_numThree;
 	}
-	public Double getCheck_numOther() {
-		return check_numOther;
+	public void setProduct_numThree(Double product_numThree) {
+		this.product_numThree = product_numThree;
 	}
-	public void setCheck_numOther(Double check_numOther) {
-		this.check_numOther = check_numOther;
+	public Double getProduct_numOther() {
+		return product_numOther;
 	}
+	public void setProduct_numOther(Double product_numOther) {
+		this.product_numOther = product_numOther;
+	}
+
 
 	private Integer co_id;
 	public String getPlan_type() {
@@ -276,6 +281,24 @@ public class Process {
 	public String getTypeName() {
 		return TypeEnum.getName(plan_type);
 	}
+	
+	
+	
+	public Double getProduct_numSum() {
+		System.out.println(product_numOne);
+		System.out.println(product_numTwo);
+		System.out.println(product_numThree);
+		System.out.println(product_numOther);
+		if(product_numOne ==null || product_numTwo ==null || product_numThree==null || product_numOther==null) {
+			Double product_numSum=0.0;
+			return product_numSum;
+		} else {
+			Double product_numSum =product_numOne+product_numTwo+product_numThree+product_numOther;
+			return product_numSum;
+		}
+		
+		
+	} 
 	@Override
 	public String toString() {
 		return "Process [process_id=" + process_id + ", plan_id=" + plan_id + ", process_cus=" + process_cus

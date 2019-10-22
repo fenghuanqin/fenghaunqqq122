@@ -130,10 +130,10 @@ public class CheckServiceImpl implements CheckService {
 
 
 	@Override
-	public Result exctUpdStatus(ProductDto dto, String currDate, String currUserName) {
+	public Result exctUpdStatusOn(ProductDto dto, String currDate, String currUserName) {
 		
 		Double arrange_num=dto.getArrange_num();
-		Double product_num=dto.getCheck_numOne()+dto.getCheck_numTwo()+dto.getCheck_numThree()+dto.getCheck_numOther();
+		Double product_num=dto.getProduct_numOne()+dto.getProduct_numTwo()+dto.getProduct_numThree()+dto.getProduct_numOther();
 		//Double dye_num=dto.getDye_num();
 		
 	
@@ -143,27 +143,33 @@ public class CheckServiceImpl implements CheckService {
 		 * System.out.println(arrange_num+","+plan_type+","+check_num);
 		 * System.out.println(dto); System.out.println("???????????????????????");
 		 */
-		
-			
-			if(product_num>arrange_num) {
-				return Result.failResult("输入的质检总量大于整理产量"); 
-			}
 			if(product_num<arrange_num) {
+				
 				int n = checkDao.updStatusOn(dto,currDate,currUserName);
-				int m = checkDao.upStatusOna(dto);
-				if(n>0 && m>0) {
+				int m = checkDao.upStatusOnProductOne(dto.getProduct_numOne(),dto);
+				int o = checkDao.upStatusOnProductTwo(dto.getProduct_numTwo(),dto);
+				int p = checkDao.upStatusOnProductThree(dto.getProduct_numThree(),dto);
+				int q = checkDao.upStatusOnProductOther(dto.getProduct_numOther(),dto);
+				if(n==1 && m==1 && o==1 && p==1 && q==1) {
 					return Result.successResult("质检中成功");
 				} 
 				else {
 					return Result.failResult("质检中失败"); 
 				}
 			}
+			
+			if(product_num>arrange_num) {
+				return Result.failResult("输入的质检总量大于整理产量，请重新输入"); 
+			}
+			else {
+				return Result.failResult("输入的质检总量等于于整理产量，请点击质检完成"); 
+			}
 		/*
 		 * else { int n = checkDao.updStatusAfter(dto,currDate,currUserName); if(n>0) {
 		 * return Result.successResult("已质检成功"); } else { return
 		 * Result.failResult("已质检失败"); } }
 		 */
-			return null;
+			
 		
 	}
 
@@ -172,26 +178,95 @@ public class CheckServiceImpl implements CheckService {
 	public List<Product> excAddCheck(ProcessDto dto) {
 		double d1=(double)Time.getDate(new Date());
 		Double product_idOne=Double.valueOf(d1);
-		System.out.println(product_idOne);
+		//System.out.println(product_idOne);
 		double d2=(double)Time.getDate(new Date());
 		Double product_idTwo=Double.valueOf(d2+1);
-		System.out.println(product_idTwo);
+		//System.out.println(product_idTwo);
 		double d3=(double)Time.getDate(new Date());
 		Double product_idThree=Double.valueOf(d3+2);
-		System.out.println(product_idThree);
+		//System.out.println(product_idThree);
 		double d4=(double)Time.getDate(new Date());
 		Double product_idOther=Double.valueOf(d4+3);
-		System.out.println(product_idOther);
-		int n = checkDao.addProduct(product_idOne,product_idTwo,product_idThree,product_idOther,dto);
-		System.out.println("插入数据 的影响行数为"+n);
-		
-		List<Product> list= checkDao.selectProduct(dto); 
-		for(Product p : list) {
-			System.out.println(p.toString());
+		//System.out.println(product_idOther);
+		List<Product> listOne= checkDao.selectProductOne(dto);
+		if(listOne.isEmpty()) {
+			int n = checkDao.addProduct(product_idOne,product_idTwo,product_idThree,product_idOther,dto);
+			System.out.println("插入数据 的影响行数为"+n);
+			List<Product> list= checkDao.selectProduct(dto); 
+			/*for(Product p : list) {
+				System.out.println(p.toString());
+			}*/
+			return list;
 		}
-		return list;
+		else {
+			List<Product> list= checkDao.selectProduct(dto); 
+			/*for(Product p : list) {
+				System.out.println(p.toString());
+			}*/
+			return list;
+		}
 		
 		
+	}
+
+
+	
+
+	@Override
+	public Result exctUpdStatusAfter(ProductDto dto, String currDate, String currUserName) {
+		Double arrange_num=dto.getArrange_num();
+		Double product_num=dto.getProduct_numOne()+dto.getProduct_numTwo()+dto.getProduct_numThree()+dto.getProduct_numOther();
+		//Double dye_num=dto.getDye_num();
+		
+		System.out.println("进入业务层");
+		
+		 //String plan_type=dto.getPlan_type();
+		  System.out.println("???????????????????????");
+		  System.out.println(arrange_num+","+product_num);
+		  System.out.println(dto); System.out.println("???????????????????????");
+		 
+			if(product_num<arrange_num) {
+				return Result.failResult("输入的质检总量小于整理产量，请点击保存"); 
+			}
+			
+			if(product_num>arrange_num) {
+				return Result.failResult("输入的质检总量大于整理产量,请重新输入"); 
+			}
+			else{
+				System.out.println("即将进入道层");
+				int n = checkDao.updStatusAfter(dto,currDate,currUserName);
+				System.out.println("影响行数为n"+n);
+				int m = checkDao.upStatusAfterProductOne(dto.getProduct_numOne(),dto);
+				System.out.println("影响行数为m"+m);
+				int o = checkDao.upStatusAfterProductTwo(dto.getProduct_numTwo(),dto);
+				System.out.println("影响行数为o"+o);
+				int p = checkDao.upStatusAfterProductThree(dto.getProduct_numThree(),dto);
+				System.out.println("影响行数为p"+p);
+				int q = checkDao.upStatusAfterProductOther(dto.getProduct_numOther(),dto);
+				System.out.println("影响行数为q"+q);
+				if(product_num == 0) {
+					if(n==1 && m==1 && o==1 && p==1 && q==1) {
+						return Result.successResult("单次质检成功");
+					} 
+					else {
+						return Result.failResult("单次质检失败"); 
+					}
+				}else {
+					if(n==1 && (m==1 || o==1 || p==1 || q==1)) {
+						return Result.successResult("多次质检成功");
+					} 
+					else {
+						return Result.failResult("多次质检失败"); 
+					}
+				}
+				
+			}
+		/*
+		 * else { int n = checkDao.updStatusAfter(dto,currDate,currUserName); if(n>0) {
+		 * return Result.successResult("已质检成功"); } else { return
+		 * Result.failResult("已质检失败"); } }
+		 */
+			
 	}
 
 

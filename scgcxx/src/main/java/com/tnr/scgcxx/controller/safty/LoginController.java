@@ -59,7 +59,7 @@ public class LoginController {
 			if(subject.isAuthenticated()) {
 				return Result.successResult("亲，登录成功");
 			}
-			return Result.failResult("登录失败");
+			return Result.failResult("账号密码不匹配，登录失败");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

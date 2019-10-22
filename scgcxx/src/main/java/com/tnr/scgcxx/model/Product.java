@@ -12,7 +12,10 @@ public class Product {
 	private String product_level;
 	private Double product_num;
 	private String product_status;
+	//private Double product_numSum;
 	
+	
+
 	private Double arrange_num;
 	public Double getArrange_num() {
 		
@@ -23,46 +26,34 @@ public class Product {
 	}
 	
 	//补充
-	private Double check_numOne;
-	private Double check_numTwo;
-	private Double check_numThree;
-	private Double check_numOther;
-	public Double getCheck_numOne() {
-		if(product_num==0) {
-			check_numOne=product_num;
-		}
-		return check_numOne;
+	private Double product_numOne;
+	private Double product_numTwo;
+	private Double product_numThree;
+	private Double product_numOther;
+	
+	public Double getProduct_numOne() {
+		return product_numOne;
 	}
-	public void setCheck_numOne(Double check_numOne) {
-		this.check_numOne = check_numOne;
+	public void setProduct_numOne(Double product_numOne) {
+		this.product_numOne = product_numOne;
 	}
-	public Double getCheck_numTwo() {
-		if(product_num==0) {
-			check_numTwo=product_num;
-		}
-		
-		return check_numTwo;
+	public Double getProduct_numTwo() {
+		return product_numTwo;
 	}
-	public void setCheck_numTwo(Double check_numTwo) {
-		this.check_numTwo = check_numTwo;
+	public void setProduct_numTwo(Double product_numTwo) {
+		this.product_numTwo = product_numTwo;
 	}
-	public Double getCheck_numThree() {
-		if(product_num==0) {
-			check_numThree=product_num;
-		}
-		return check_numThree;
+	public Double getProduct_numThree() {
+		return product_numThree;
 	}
-	public void setCheck_numThree(Double check_numThree) {
-		this.check_numThree = check_numThree;
+	public void setProduct_numThree(Double product_numThree) {
+		this.product_numThree = product_numThree;
 	}
-	public Double getCheck_numOther() {
-		if(product_num==0) {
-			check_numOther=product_num;
-		}
-		return check_numOther;
+	public Double getProduct_numOther() {
+		return product_numOther;
 	}
-	public void setCheck_numOther(Double check_numOther) {
-		this.check_numOther = check_numOther;
+	public void setProduct_numOther(Double product_numOther) {
+		this.product_numOther = product_numOther;
 	}
 	public Double getProduct_id() {
 		return product_id;
@@ -101,6 +92,7 @@ public class Product {
 		this.product_level = product_level;
 	}
 	public Double getProduct_num() {
+		
 		return product_num;
 	}
 	public void setProduct_num(Double product_num) {
@@ -115,6 +107,7 @@ public class Product {
 	public String getProduct_statusEnumName() {
 		return Product_statusEnum.getName(product_status);
 	}
+
 	@Override
 	public String toString() {
 		return "Product [product_id=" + product_id + ", process_id=" + process_id + ", product_cus=" + product_cus

@@ -96,7 +96,7 @@ public class CheckController {
 		return checkService.exctUpd(dto,currDate,currUserName);
 	}
 	@PutMapping("/checkOn")
-	public Result exctUpdStatus(@RequestBody ProductDto dto) {
+	public Result exctUpdStatusOn(@RequestBody ProductDto dto) {
 		CurrUser currUser = (CurrUser)SecurityUtils.getSubject().getPrincipal();
 		String currUserName=currUser.getUserName();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -106,7 +106,22 @@ public class CheckController {
 		System.out.println(dto.toString());
 		
 		System.out.println("----------------------");
-		return checkService.exctUpdStatus(dto,currDate,currUserName);
+		return checkService.exctUpdStatusOn(dto,currDate,currUserName);
+	}
+	@PutMapping("/checkAfter")
+	public Result exctUpdStatusAfter(@RequestBody ProductDto dto) {
+		CurrUser currUser = (CurrUser)SecurityUtils.getSubject().getPrincipal();
+		String currUserName=currUser.getUserName();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String currDate=df.format(new Date());
+		
+		System.out.println("----------------------");
+		System.out.println("进入控制层");
+		//System.out.println(dto.toString());
+		
+		System.out.println("----------------------");
+		
+		return checkService.exctUpdStatusAfter(dto,currDate,currUserName);
 	}
 	@DeleteMapping("dele/{process_id}")
 	public Result exctDele(@PathVariable("process_id") Double process_id) {

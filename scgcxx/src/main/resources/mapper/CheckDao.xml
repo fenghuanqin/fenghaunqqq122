@@ -21,7 +21,11 @@
 			print_num,print_date,print_person,
 			arrange_num,arrange_date,arrange_person,
 			check_num,check_date,check_person,
-			process_status
+			process_status,
+			(select product_num from bus_product where process_id=pr.process_id and product_level=1) product_numOne,
+			(select product_num from bus_product where process_id=pr.process_id and product_level=2) product_numTwo,
+			(select product_num from bus_product where process_id=pr.process_id and product_level=3) product_numThree,
+			(select product_num from bus_product where process_id=pr.process_id and product_level=4) product_numOther
 		from bus_process pr 
 							INNER JOIN bus_plan p on pr.plan_id=p.plan_id
 							INNER JOIN info_standard s on p.standard_id=s.standard_id
@@ -29,14 +33,14 @@
 							INNER JOIN info_color co on p.co_id=co.co_id 	
 		<where>
 				<!-- (process_status='10'and p.plan_type='3')
-			or (process_status='15' and p.plan_type='2')
+			or (process_status='15' and p.plan_type='2') 
 			or (process_status='15' and p.plan_type='4') -->
 			<if test="process_id !=null">
 				process_id like concat('%',#{process_id},'%')
 			</if>
 			
 			<if test="plan_id !=null">
-				and plan_id like concat('%',#{plan_id},'%')
+				and pr.plan_id like concat('%',#{plan_id},'%')
 			</if>
 
 			<if test="standard_id !=null">
@@ -221,6 +225,16 @@
 
 	</delete> 
  	<select id="selectProduct" resultType="Product">
+		select
+ 				pr.*, p.*
+		from bus_product pr
+				INNER JOIN bus_process p on pr.process_id = p.process_id
+																	
+		where 
+			p.process_id=#{dto.process_id}
+	
+	</select>
+	<select id="selectProductOne" resultType="Product">
 		select
  				pr.*, p.*
 		from bus_product pr
