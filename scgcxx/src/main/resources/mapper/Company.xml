@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tnr.scgcxx.dao.query.CompanyDao">
+	<select id="findCompanyList" resultType="Query">
+select (@i:=@i+1) company_id,t.*
+from
+(select
+	pr.process_cus,pr.process_std, 
+	(select sum(group_num) from bus_process where process_cus=pr.process_cus and process_std=pr.process_std and process_status='05') group_num,
+	(select sum(product_num) from bus_product where product_cus=pr.process_cus and product_std=pr.process_std and product_level=1) product_num_One,
+	(select sum(product_num) from bus_product where product_cus=pr.process_cus and product_std=pr.process_std and product_level=2) product_num_two,
+	(select sum(product_num) from bus_product where product_cus=pr.process_cus and product_std=pr.process_std and product_level=3) product_num_three,
+	(select sum(product_num) from bus_product where product_cus=pr.process_cus and product_std=pr.process_std and product_level=4) product_num_Other
+from bus_process pr
+group by pr.process_cus,pr.process_std 
+)t,(select @i:=0)t2
+union all
+select 
+	null,null,'合计',
+	(select sum(group_num) from bus_process where  process_status='05') group_num,
+	(select sum(product_num) from bus_product where product_level=1) product_num_One,
+	(select sum(product_num) from bus_product where product_level=2) product_num_Two,
+	(select sum(product_num) from bus_product where product_level=3) product_num_Three,
+	(select sum(product_num) from bus_product where product_level=4) product_num_Other
+	
+		
+		
+		
+	</select>
+
+
+
+</mapper>
