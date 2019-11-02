@@ -8,6 +8,8 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
@@ -117,7 +119,7 @@ public class ShiroConfign {
 	                    simpleAuthorizationInfo.addStringPermission(String.valueOf(module.getM_id()));
 	                }
 
-	                // System.out.println(currUser.getUserId()+"->"+simpleAuthorizationInfo.getStringPermissions());
+	               LOG.debug(currUser.getUserId()+"的权限->"+simpleAuthorizationInfo.getStringPermissions());
 
 	                /*
 	                * 返回授权信息
@@ -215,7 +217,15 @@ public class ShiroConfign {
 	        return chainDefinition;
 	    }
 	    
-	
-	
+	    /*
+	    @Bean
+	    protected CacheManager cacheManager() {
+	        return new MemoryConstrainedCacheManager();
+	    }
+	    */
+	    @Bean 
+	    protected CacheManager shiroCacheManager() {
+	        return new MemoryConstrainedCacheManager();
+	    }
 
 }

@@ -1,14 +1,18 @@
 package com.tnr.scgcxx.model;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tnr.scgc.base.StatusEnum;
 
-public class Customer {
+import jdk.internal.jline.internal.Log;
+
+public class Customer implements java.io.Serializable{
 	
 	private Integer cus_id;
 	private String cus_name;
 	private String cus_remark;
 	private String cus_status;
-	
+
 	
 	public Integer getCus_id() {
 		return cus_id;
@@ -37,5 +41,17 @@ public class Customer {
 	
 	public String getStatusName() {
 		return StatusEnum.getName(cus_status);
+	}
+	@Override
+	public String toString() {
+		try {
+			String json = new ObjectMapper().writeValueAsString(this);
+			Log.debug(this.getClass().getSimpleName()+"=>"+json);
+			return json;
+		} catch (JsonProcessingException e) {
+			
+			e.printStackTrace();
+		}
+		return "{cus_id:"+cus_id+",cus_name:"+cus_name+",cus_remark:"+cus_remark+",cus_status:"+cus_status+"}";
 	}
 }

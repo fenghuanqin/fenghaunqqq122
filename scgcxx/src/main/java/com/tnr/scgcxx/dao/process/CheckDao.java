@@ -37,7 +37,7 @@ public interface CheckDao {
 	//int updProcess(@Param("process_id")Double process_id, @Param("plan_id")Integer plan_id, @Param("process_cus")Integer process_cus, @Param("process_std")Integer process_std, @Param("process_color")Integer process_color,
 			//@Param("process_num")Double process_num, @Param("currDate")String currDate, @Param("currUserName")String currUserName);
 	int updProcess(@Param("process_id")Double process_id, @Param("plan")Plan plan, @Param("process_num")Double process_num, @Param("currDate")String currDate, @Param("currUserName")String currUserName);
-	@Update("update bus_process set check_num=#{dto.arrange_num},check_date=#{currDate},check_person=#{currUserName},process_status='30'where process_id=#{dto.process_id}")
+	@Update("update bus_process set check_date=#{currDate},check_person=#{currUserName},process_status='30'where process_id=#{dto.process_id}")
 	int updStatusOn(@Param("dto")ProductDto dto,  @Param("currDate")String currDate, @Param("currUserName")String currUserName);
 	@Update("update bus_process set check_num=#{dto.arrange_num},check_date=#{currDate},check_person=#{currUserName},process_status='35'where process_id=#{dto.process_id}")
 	int updStatusAfter(@Param("dto")ProductDto dto,  @Param("currDate")String currDate, @Param("currUserName")String currUserName);

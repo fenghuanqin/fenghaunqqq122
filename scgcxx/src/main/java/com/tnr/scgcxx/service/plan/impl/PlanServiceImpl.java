@@ -35,6 +35,8 @@ public class PlanServiceImpl implements PlanService {
 		System.out.println("----------------------");
 		System.out.println(dto.getPlan_id()+","+currUserName+","+currDate);
 		System.out.println("----------------------");
+		//Standard std = planDao.findStandard(dto.getStandard_id());
+		//String standard_name=std.getStandard_name();
 		int cnt = planDao.add(dto, currDate, currUserName);
 		if(cnt>0) {
 			return Result.successResult("增加计划成功");

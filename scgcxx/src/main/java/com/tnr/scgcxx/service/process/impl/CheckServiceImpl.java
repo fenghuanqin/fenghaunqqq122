@@ -244,7 +244,9 @@ public class CheckServiceImpl implements CheckService {
 				System.out.println("影响行数为p"+p);
 				int q = checkDao.upStatusAfterProductOther(dto.getProduct_numOther(),dto);
 				System.out.println("影响行数为q"+q);
-				if(product_num == 0) {
+				System.out.println("arrange_num大小为"+","+arrange_num+","+"product_num大小为"+","+product_num);
+				if(product_num.equals(arrange_num)) {
+					System.out.println("进入if语句");
 					if(n==1 && m==1 && o==1 && p==1 && q==1) {
 						return Result.successResult("单次质检成功");
 					} 
@@ -252,6 +254,7 @@ public class CheckServiceImpl implements CheckService {
 						return Result.failResult("单次质检失败"); 
 					}
 				}else {
+					System.out.println("进入else语句");
 					if(n==1 && (m==1 || o==1 || p==1 || q==1)) {
 						return Result.successResult("多次质检成功");
 					} 

@@ -17,6 +17,7 @@ import com.tnr.scgcxx.dto.Result;
 import com.tnr.scgcxx.model.Color;
 import com.tnr.scgcxx.model.Customer;
 import com.tnr.scgcxx.model.Plan;
+import com.tnr.scgcxx.model.PlanTwo;
 import com.tnr.scgcxx.model.Standard;
 import com.tnr.scgcxx.service.process.RawclothService;
 import com.tnr.scgcxx.util.Utils;
@@ -69,6 +70,10 @@ public class RowclothServiceImpl implements RawclothService {
 	
 	@Override
 	public Result exctAdd(ProcessDto dto, String currDate, String currUserName) {
+		
+		//Integer standard_id = rowclothDao.findStandardId(dto.getPlan_id());
+		PlanTwo two = rowclothDao.findPlanTwo(dto.getPlan_id());
+		
 		Integer plan_id=dto.getPlan_id();
 		int plan_idNum=rowclothDao.selectPlanIdNum(plan_id);//plan_idNum指通过计划编号查询出该计划的计划编号数目（已经添加分组了，该数肯定大于0.未分组则肯定等于0）
 		if(dto.getGroup_num()>dto.getPlan_num()) {
@@ -88,7 +93,7 @@ public class RowclothServiceImpl implements RawclothService {
 						//Double process_id=rowclothDao.getCount();
 						double d=(double)Time.getDate(new Date());
 						Double process_id=Double.valueOf(d);
-						n = rowclothDao.addProcess(process_id,group_num,dto,currDate,currUserName)+n;
+						n = rowclothDao.addProcess(process_id,group_num,dto,currDate,currUserName,two)+n;
 						
 					}
 					
@@ -106,11 +111,11 @@ public class RowclothServiceImpl implements RawclothService {
 					int k=0;
 					for(int i=0;i<j-1;i++) {
 						Double process_id=rowclothDao.getCount();
-						k = rowclothDao.addProcess(process_id,group_num,dto,currDate,currUserName)+k;
+						k = rowclothDao.addProcess(process_id,group_num,dto,currDate,currUserName,two)+k;
 					}
 					Double process_id=rowclothDao.getCount();
 					
-					int a=rowclothDao.addProcess(process_id,s,dto,currDate,currUserName);
+					int a=rowclothDao.addProcess(process_id,s,dto,currDate,currUserName,two);
 					System.out.println("-----------------");
 					System.out.println(a+","+k+","+j);
 					System.out.println("-----------------");

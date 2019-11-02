@@ -124,7 +124,21 @@
 	
 	
 	</select>
-	<select id="getOnePlan" resultType="Plan">
+	<select id="findPlanTwo" resultType="PlanTwo">
+	
+	select 
+		concat(p.standard_id,'-',s.standard_name) standard_id,
+		concat(p.cus_id,'-',c.cus_name) cus_id,
+		concat(p.co_id,'-',co.co_name) co_id
+from bus_plan p
+		inner join info_standard s on p.standard_id=s.standard_id
+		inner join info_customer c on p.cus_id=c.cus_id
+		inner join info_color co on p.co_id=co.co_id
+where 
+		p.plan_id=#{plan_id}
+	</select>
+	
+		<select id="getOnePlan" resultType="Plan">
 	
 	select
 			plan_id,
@@ -147,16 +161,41 @@
 			where
 					p.plan_id=#{plan_id}
 	</select>
-	
+	<!--  
 	<insert id="addProcess">
 	
 	insert into bus_process (plan_id,process_cus,process_std,process_color,group_num,process_id,group_date,group_person,process_status)
 	SELECT  plan_id,cus_id,standard_id,co_id,#{group_num},#{process_id},#{currDate},#{currUserName},'00'
-	 from 	bus_plan p
+	 from 	bus_plan p　
 	 where 
 	 		p.plan_id=#{dto.plan_id}
 			and p.plan_status='1'
 	
+	
+	</insert>
+	-->
+	<insert id="addProcess">
+	
+	insert into 
+			bus_process 
+			(process_id,
+			plan_id,
+			process_cus,
+			process_std,
+			process_color,
+			group_num,
+			group_date,
+			group_person,
+			process_status)
+	values(#{process_id},
+			#{dto.plan_id},
+			#{two.cus_id},
+			#{two.standard_id},
+			#{two.co_id},
+			#{group_num},
+			#{currDate},
+			#{currUserName},
+			'00')
 	
 	</insert>
 	<select id="getOnePlanUp" resultType="Plan">

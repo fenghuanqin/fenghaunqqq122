@@ -11,6 +11,7 @@ import com.tnr.scgcxx.dto.ProcessDto;
 import com.tnr.scgcxx.model.Color;
 import com.tnr.scgcxx.model.Customer;
 import com.tnr.scgcxx.model.Plan;
+import com.tnr.scgcxx.model.PlanTwo;
 import com.tnr.scgcxx.model.Process;
 import com.tnr.scgcxx.model.Standard;
 
@@ -27,7 +28,7 @@ public interface RowclothDao {
 	List<Color> findColor();
 	
 	Plan getOnePlan(Integer plan_id);
-	int addProcess(@Param("process_id")Double process_id,@Param("group_num")Double group_num, @Param("dto")ProcessDto dto, @Param("currDate")String currDate, @Param("currUserName")String currUserName);
+	int addProcess(@Param("process_id")Double process_id,@Param("group_num")Double group_num, @Param("dto")ProcessDto dto, @Param("currDate")String currDate, @Param("currUserName")String currUserName,@Param("two") PlanTwo two);
 	Plan getOnePlanUp(Integer plan_id);
 	//int updProcess(@Param("process_id")Double process_id, @Param("plan_id")Integer plan_id, @Param("process_cus")Integer process_cus, @Param("process_std")Integer process_std, @Param("process_color")Integer process_color,
 			//@Param("process_num")Double process_num, @Param("currDate")String currDate, @Param("currUserName")String currUserName);
@@ -41,6 +42,9 @@ public interface RowclothDao {
 	Double getCount();
 	@Select("SELECT COunt(process_id) from bus_process where plan_id=#{plan_id}")
 	int selectPlanIdNum(Integer plan_id);
+	PlanTwo findPlanTwo(Integer plan_id);
+	
+	//@Select("select * from info_standard where standard_id=#{standard_id}")
 	
 	
 	 

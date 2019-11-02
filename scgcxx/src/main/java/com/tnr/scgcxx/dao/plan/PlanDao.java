@@ -33,6 +33,8 @@ public interface PlanDao {
 	@Delete("delete from bus_plan where plan_id=#{plan_id} ")
 	int delePlan(Integer plan_id);
 	int delesPlan(@Param("plan_ids") Integer[] plan_ids);
+	//@Select("select * from info_standard where standard_id=#{standard_id}")
+	//Standard findStandard(Integer standard_id);
 	
 
 }
