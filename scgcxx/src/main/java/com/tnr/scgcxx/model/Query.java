@@ -8,9 +8,10 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tnr.scgcxx.dto.CustomerDto;
+import com.tnr.scgcxx.dto.QueryDto;
 
 public class Query implements java.io.Serializable{
-	private static final Logger LOG=LoggerFactory.getLogger(CustomerDto.class);
+	private static final Logger LOG=LoggerFactory.getLogger(QueryDto.class);
 	private Integer company_id;
 	private String process_cus;
 	private String process_std;

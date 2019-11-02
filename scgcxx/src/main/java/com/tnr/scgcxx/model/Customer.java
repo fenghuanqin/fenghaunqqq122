@@ -1,13 +1,17 @@
 package com.tnr.scgcxx.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tnr.scgc.base.StatusEnum;
+import com.tnr.scgcxx.dto.CustomerDto;
 
 import jdk.internal.jline.internal.Log;
 
 public class Customer implements java.io.Serializable{
-	
+	private static final Logger LOG=LoggerFactory.getLogger(CustomerDto.class);
 	private Integer cus_id;
 	private String cus_name;
 	private String cus_remark;
@@ -46,7 +50,7 @@ public class Customer implements java.io.Serializable{
 	public String toString() {
 		try {
 			String json = new ObjectMapper().writeValueAsString(this);
-			Log.debug(this.getClass().getSimpleName()+"=>"+json);
+			LOG.debug(this.getClass().getSimpleName()+"=>"+json);
 			return json;
 		} catch (JsonProcessingException e) {
 			
